@@ -16,7 +16,7 @@ FROM users;
 DELETE
 FROM photos;
 
-INSERT INTO users (userid, name, email, password, prefferenceid, photoid, articleid)
+INSERT INTO users (userid, name, email, password, preferenceid, photoid, articleid)
     VALUES (1, 'neo', 'neo@pikipika.com', 'pika123', 1,1,1),
            (2, 'Scarlett', 'scar@pikapika.com', 'pika123', 2,2,2);
 
@@ -38,7 +38,7 @@ INSERT INTO userroles
            (2, 1),
            (2, 2);
 
-INSERT INTO preference (prefferenceid, avatar, colorscheme)
+INSERT INTO preference (preferenceid, avatar, colorscheme)
     VALUES (4, 'pikachu', "maroon"),
            (5, 'mewtwo', "yellow");
 
