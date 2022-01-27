@@ -2,7 +2,9 @@ package com.pokehuddle.pokehuddlebackend.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -25,6 +27,13 @@ public class User {
     //orphan removal makes it so that if there is an article that isnt related to any users(for whatever reason), then we want to get rid of that article, orphan removal will delete that article
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Article> articles = new ArrayList<>();
+
+    @ManyToMany()
+    @JoinTable(name = "userroles",
+            joinColumns = @JoinColumn(name = "userid"),
+            inverseJoinColumns = @JoinColumn(name = "roleid"))
+    private Set<Role> roles = new HashSet<>();
+
 
     public User() {
     }
@@ -74,5 +83,13 @@ public class User {
 
     public void setArticles(List<Article> articles) {
         this.articles = articles;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

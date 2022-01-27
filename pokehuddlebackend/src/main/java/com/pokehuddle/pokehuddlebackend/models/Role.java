@@ -14,7 +14,7 @@ public class Role {
     @Column(nullable = false)
     private String role; // only 2 roles will be allowed in the gui, admin or member
 
-    @ManyToMany()
+    @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
     public Role() {
@@ -38,5 +38,13 @@ public class Role {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }
