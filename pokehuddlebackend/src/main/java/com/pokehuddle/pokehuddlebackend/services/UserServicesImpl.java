@@ -5,7 +5,10 @@ import com.pokehuddle.pokehuddlebackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 //if you have a method in the class that is transactional, you should also make the entire class transactional
 @Transactional
@@ -20,5 +23,35 @@ public class UserServicesImpl implements UserServices{
     @Override
     public User save(User user) {
         return userrepository.save(user);
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        List<User> list = new ArrayList<>();
+        userrepository.findAll()
+                .iterator()
+                .forEachRemaining(list::add);
+        return list;
+    }
+
+    @Override
+    public User findUserById(long id) {
+
+        return userrepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User " + id + "Not Found!"));
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        User returnUser = userrepository.findByUsername(username);
+        if(returnUser == null) {
+            throw new EntityNotFoundException("User "+ username + " Not Found");
+        }
+        return returnUser;
+    }
+
+    @Override
+    public List<User> findByUserNamelike(String subname) {
+        return null;
     }
 }

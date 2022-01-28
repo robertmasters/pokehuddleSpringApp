@@ -23,7 +23,7 @@ INSERT INTO roles (roleid, role)
     VALUES (1, 'admin'),
            (2, 'member');
 
-INSERT INTO articles (articleid, title, body, author)
+INSERT INTO articles (articleid, title, body, author, userid)
     VALUES (1, 'Pikachu is too popular', 'Sic de isto et tutius perducit ad actum ipsum, ut si dico Ego autem vadam lavari, ut mens mea in statu naturae conformior. Et similiter circa alias', 'Neo', 1 ),
            (2, 'Top Ash Mistakes', 'Sic de isto et tutius perducit ad actum ipsum, ut si dico Ego autem vadam', 'Neo', 1),
            (3, 'Mew vs Mewtwo', 'Sic de isto et tutius perducit ad actum ipsum, ut si dico “Ego autem vadam', 'Scarlett', 2);

@@ -1,5 +1,7 @@
 package com.pokehuddle.pokehuddlebackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +17,7 @@ public class Role {
     private String role; // only 2 roles will be allowed in the gui, admin or member
 
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnoreProperties(value = "roles", allowSetters = true)
     private Set<User> users = new HashSet<>();
 
     public Role() {

@@ -1,5 +1,7 @@
 package com.pokehuddle.pokehuddlebackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,6 +23,7 @@ public class Article {
 
     @ManyToOne
     @JoinColumn(name = "userid", nullable = false)
+    @JsonIgnoreProperties(value = "articles", allowSetters = true)
     private User user;
 
     public Article() {

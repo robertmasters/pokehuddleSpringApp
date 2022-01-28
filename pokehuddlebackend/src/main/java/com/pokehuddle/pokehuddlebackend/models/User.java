@@ -1,5 +1,7 @@
 package com.pokehuddle.pokehuddlebackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,12 +28,14 @@ public class User {
     //cascade type all makes it so that whatever happens to user also happens to article
     //orphan removal makes it so that if there is an article that isnt related to any users(for whatever reason), then we want to get rid of that article, orphan removal will delete that article
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
     private List<Article> articles = new ArrayList<>();
 
     @ManyToMany()
     @JoinTable(name = "userroles",
             joinColumns = @JoinColumn(name = "userid"),
             inverseJoinColumns = @JoinColumn(name = "roleid"))
+    @JsonIgnoreProperties(value = "users")
     private Set<Role> roles = new HashSet<>();
 
 
