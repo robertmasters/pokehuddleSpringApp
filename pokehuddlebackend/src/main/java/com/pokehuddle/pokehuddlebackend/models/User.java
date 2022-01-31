@@ -42,7 +42,7 @@ public class User {
     public User() {
     }
 
-    //if its a single item, add it to the constructor, if its a collection dont add it to the constructor.
+    //if it is a single item, add it to the constructor, if its a collection dont add it to the constructor.
     public User(String name, String email, String password) {
         this.username = name;
         this.email = email;

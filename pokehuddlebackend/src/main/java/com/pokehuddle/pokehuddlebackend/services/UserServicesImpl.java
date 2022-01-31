@@ -51,7 +51,8 @@ public class UserServicesImpl implements UserServices{
     }
 
     @Override
-    public List<User> findByUserNamelike(String subname) {
-        return null;
+    public List<User> findByUsernameLike(String subusername) {
+        List<User> returnList = userrepository.findByUsernameContainingIgnoringCase(subusername);
+        return returnList;
     }
 }
