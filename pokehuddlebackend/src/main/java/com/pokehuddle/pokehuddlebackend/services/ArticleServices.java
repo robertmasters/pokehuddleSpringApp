@@ -9,5 +9,5 @@ public interface ArticleServices {
 
     List<Article> findAllArticles();
     Article findArticleById(long id);
-    List<Article> findArticlesLikeTitle(String subtitle);
+    List<Article> findByTitleLike(String subtitle);
 }

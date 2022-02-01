@@ -39,7 +39,7 @@ public class ArticleServicesImpl implements ArticleServices{
     }
 
     @Override
-    public List<Article> findArticlesLikeTitle(String subtitle) {
+    public List<Article> findByTitleLike(String subtitle) {
         List<Article> returnList = articlerepository.findByTitleContainingIgnoringCase(subtitle);
         return returnList;
     }

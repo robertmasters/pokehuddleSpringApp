@@ -34,9 +34,9 @@ public class ArticleController {
     }
 
     //.../articles/articletitle
-    @GetMapping(value = "/articles/articles/{subarticletitle}", produces = "application/json")
+    @GetMapping(value = "/article/articleslike/{subarticletitle}", produces = "application/json")
     public ResponseEntity<?> findArticlesLikeTitle(@PathVariable String subarticletitle) {
-        List<Article> returnList = articleServices.findArticlesLikeTitle(subarticletitle);
+        List<Article> returnList = articleServices.findByTitleLike(subarticletitle);
         return new ResponseEntity<>(returnList, HttpStatus.OK);
     }
 }
