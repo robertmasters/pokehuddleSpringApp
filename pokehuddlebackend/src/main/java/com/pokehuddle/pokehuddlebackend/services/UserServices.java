@@ -16,4 +16,6 @@ public interface UserServices {
 
     List<User> findByUsernameLike(String subusername);
 
+    void delete(long userid);
+
 }

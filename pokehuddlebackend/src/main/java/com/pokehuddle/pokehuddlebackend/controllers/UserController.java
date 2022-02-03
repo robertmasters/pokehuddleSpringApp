@@ -3,13 +3,14 @@ package com.pokehuddle.pokehuddlebackend.controllers;
 import com.pokehuddle.pokehuddlebackend.models.User;
 import com.pokehuddle.pokehuddlebackend.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -48,4 +49,47 @@ public class UserController {
         List<User> returnList = userServices.findByUsernameLike(subusername);
         return new ResponseEntity<>(returnList, HttpStatus.OK);
     }
+
+    //POST users/user
+    //Request Body -> contain new user data
+    public  ResponseEntity<?> addUser(@Valid @RequestBody User newUser, @PathVariable long userid) { //@valid checks to make sure that everything that should be in the object being sent in is there.
+        newUser.setUserid(userid);
+        newUser = userServices.save(newUser);
+
+        //http headers - location: link to the newly created restaurant
+        HttpHeaders responseHeaders = new HttpHeaders();
+
+        //builds this path../users/user/15 so that a new userid is made
+        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{userid}")
+                .buildAndExpand(newUser.getUserid())
+                .toUri();
+        responseHeaders.setLocation(newUserURI);
+
+        return new ResponseEntity<>(newUser, responseHeaders, HttpStatus.CREATED);
+    }
+
+    //PUT user/id
+    @PutMapping(value = "/user/userid", produces = "application/json", consumes = "application/json")
+    public  ResponseEntity<?> updateFullUser(@Valid @RequestBody User updateUser) { //@valid checks to make sure that everything that should be in the object being sent in is there.
+        updateUser.setUserid(0); //0 is the same as saying you have no id, 0 is a null id
+        updateUser = userServices.save(updateUser);
+        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+    }
+
+    //PATCH user/id
+    @PatchMapping(value = "/user/{userid}", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<?> updateUser(@RequestBody User updateUser, @PathVariable long userid) {
+        updateUser = userServices.update(updateUser, userid);
+        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+    }
+
+    //DELETE user/id
+    @DeleteMapping(value = "/user/{userid}")
+    public ResponseEntity<?> deleteUserById(@PathVariable long userid) {
+        userServices.delete(userid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
