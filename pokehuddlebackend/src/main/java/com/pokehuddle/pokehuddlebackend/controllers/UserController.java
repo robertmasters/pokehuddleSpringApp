@@ -52,8 +52,9 @@ public class UserController {
 
     //POST users/user
     //Request Body -> contain new user data
-    public  ResponseEntity<?> addUser(@Valid @RequestBody User newUser, @PathVariable long userid) { //@valid checks to make sure that everything that should be in the object being sent in is there.
-        newUser.setUserid(userid);
+    @PostMapping(value = "/user", consumes = "application/json", produces = "application/json")
+    public  ResponseEntity<?> addUser(@Valid @RequestBody User newUser) { //@valid checks to make sure that everything that should be in the object being sent in is there.
+        newUser.setUserid(0);//0 is the same as saying you have no id, 0 is a null id
         newUser = userServices.save(newUser);
 
         //http headers - location: link to the newly created restaurant
@@ -70,10 +71,10 @@ public class UserController {
     }
 
     //PUT user/id
-    @PutMapping(value = "/user/userid", produces = "application/json", consumes = "application/json")
-    public  ResponseEntity<?> updateFullUser(@Valid @RequestBody User updateUser) { //@valid checks to make sure that everything that should be in the object being sent in is there.
-        updateUser.setUserid(0); //0 is the same as saying you have no id, 0 is a null id
-        updateUser = userServices.save(updateUser);
+    @PutMapping(value = "/user/{userid}", produces = "application/json", consumes = "application/json")
+    public  ResponseEntity<?> updateFullUser(@Valid @RequestBody User updateUser, @PathVariable long userid) { //@valid checks to make sure that everything that should be in the object being sent in is there.
+        updateUser.setUserid(userid); //0 is the same as saying you have no id, 0 is a null id
+        userServices.save(updateUser);
         return new ResponseEntity<>(updateUser, HttpStatus.OK);
     }
 

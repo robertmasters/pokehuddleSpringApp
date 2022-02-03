@@ -106,4 +106,56 @@ public class UserServicesImpl implements UserServices{
             throw new EntityNotFoundException("User " + userid + " not found!");
         }
     }
+
+    @Override
+    public User update(User updateUser, long userid) {
+        User currentUser = userrepository.findById(userid)
+                .orElseThrow(() -> new EntityNotFoundException("User " + userid + " not found!"));
+
+
+
+        //primitive data type/String
+        if (updateUser.getUsername() != null) {
+            currentUser.setUsername(updateUser.getUsername());
+        }
+
+        if (updateUser.getEmail() != null) {
+            currentUser.setEmail(updateUser.getEmail());
+        }
+
+        if (updateUser.getPassword() != null) {
+            currentUser.setPassword(updateUser.getPassword());
+        }
+
+        //collections
+        //collections are better handles as a complete replace to avoid confusion and complicated logic
+
+        //many to many
+
+        if(updateUser.getRoles().size() >0 ) {
+            currentUser.getRoles().clear();
+            for (Role r : updateUser.getRoles()) {
+                Role newRole = rolerepository.findById(r.getRoleid())
+                        .orElseThrow(() -> new EntityNotFoundException("Role " + r.getRoleid() + " not found"));
+
+                currentUser.getRoles().add(newRole);
+            }
+        }
+
+        //one to many
+        if(updateUser.getArticles().size() > 0) {
+            currentUser.getArticles().clear();
+            for (Article a : updateUser.getArticles()) {
+                Article newArticle = new Article();
+                newArticle.setAuthor(a.getAuthor());
+                newArticle.setTitle(a.getTitle());
+                newArticle.setBody(a.getBody());
+                newArticle.setUser(currentUser);
+
+                currentUser.getArticles().add(newArticle);
+            }
+        }
+
+        return userrepository.save(currentUser);
+    }
 }
