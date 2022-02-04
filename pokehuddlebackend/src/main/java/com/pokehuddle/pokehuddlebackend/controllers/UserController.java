@@ -73,7 +73,7 @@ public class UserController {
     //PUT user/id
     @PutMapping(value = "/user/{userid}", produces = "application/json", consumes = "application/json")
     public  ResponseEntity<?> updateFullUser(@Valid @RequestBody User updateUser, @PathVariable long userid) { //@valid checks to make sure that everything that should be in the object being sent in is there.
-        updateUser.setUserid(userid); //0 is the same as saying you have no id, 0 is a null id
+        updateUser.setUserid(userid);
         userServices.save(updateUser);
         return new ResponseEntity<>(updateUser, HttpStatus.OK);
     }

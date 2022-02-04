@@ -30,6 +30,7 @@ public class UserServicesImpl implements UserServices{
     public User save(User user) {
         User newUser = new User();
 
+        //if there is an id, check to make sure its a valid id
         if (user.getUserid() != 0) {
             userrepository.findById(user.getUserid())
                     .orElseThrow(() -> new EntityNotFoundException("User " + user.getUserid() + " not found!"));
@@ -113,8 +114,8 @@ public class UserServicesImpl implements UserServices{
                 .orElseThrow(() -> new EntityNotFoundException("User " + userid + " not found!"));
 
 
-
-        //primitive data type/String
+        //if no new data is sent for these fields, then leave whatever is already on there.
+        //data type String
         if (updateUser.getUsername() != null) {
             currentUser.setUsername(updateUser.getUsername());
         }
@@ -126,6 +127,8 @@ public class UserServicesImpl implements UserServices{
         if (updateUser.getPassword() != null) {
             currentUser.setPassword(updateUser.getPassword());
         }
+
+        //data types that are primitive such as long, boolean, char. etc are handles a little different, and have to be modified on the model level as well.
 
         //collections
         //collections are better handles as a complete replace to avoid confusion and complicated logic

@@ -10,4 +10,8 @@ public interface ArticleServices {
     List<Article> findAllArticles();
     Article findArticleById(long id);
     List<Article> findByTitleLike(String subtitle);
+
+    void delete(long articleid);
+
+    Article update(Article updateArticle, long articleid);
 }
