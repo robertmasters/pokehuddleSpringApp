@@ -3,6 +3,7 @@ package com.pokehuddle.pokehuddlebackend.services;
 import com.pokehuddle.pokehuddlebackend.models.Article;
 import com.pokehuddle.pokehuddlebackend.models.Role;
 import com.pokehuddle.pokehuddlebackend.models.User;
+import com.pokehuddle.pokehuddlebackend.models.UserRoles;
 import com.pokehuddle.pokehuddlebackend.repositories.RoleRepository;
 import com.pokehuddle.pokehuddlebackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +46,11 @@ public class UserServicesImpl implements UserServices{
         //collections
         //many to many
         newUser.getRoles().clear();
-        for(Role r: user.getRoles()) {
-            Role newRole = rolerepository.findById(r.getRoleid())
-                    .orElseThrow(() -> new EntityNotFoundException("Role " + r.getRoleid() + " not found"));
+        for(UserRoles r: user.getRoles()) {
+            Role newRole = rolerepository.findById(r.getRole().getRoleid())
+                    .orElseThrow(() -> new EntityNotFoundException("Role " + r.getRole().getRoleid() + " not found"));
 
-            newUser.getRoles().add(newRole);
+            newUser.getRoles().add(new UserRoles(newUser, newRole));
         }
 
         //one to many
@@ -137,11 +138,11 @@ public class UserServicesImpl implements UserServices{
 
         if(updateUser.getRoles().size() >0 ) {
             currentUser.getRoles().clear();
-            for (Role r : updateUser.getRoles()) {
-                Role newRole = rolerepository.findById(r.getRoleid())
-                        .orElseThrow(() -> new EntityNotFoundException("Role " + r.getRoleid() + " not found"));
+            for (UserRoles r : updateUser.getRoles()) {
+                Role newRole = rolerepository.findById(r.getRole().getRoleid())
+                        .orElseThrow(() -> new EntityNotFoundException("Role " + r.getRole().getRoleid() + " not found"));
 
-                currentUser.getRoles().add(newRole);
+                currentUser.getRoles().add(new UserRoles(currentUser, newRole));
             }
         }
 

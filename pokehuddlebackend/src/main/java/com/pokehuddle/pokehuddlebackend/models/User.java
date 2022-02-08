@@ -31,13 +31,19 @@ public class User {
     @JsonIgnoreProperties(value = "user", allowSetters = true)
     private List<Article> articles = new ArrayList<>();
 
-    @ManyToMany()
-    @JoinTable(name = "userroles",
-            joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "roleid"))
-    @JsonIgnoreProperties(value = "users")
-    private Set<Role> roles = new HashSet<>();
+    //    //Example of how I would have implemented a many to many instead of doing the userRolesID and Userroles classes
+//    @ManyToMany()
+//    @JoinTable(name = "userroles",
+//            joinColumns = @JoinColumn(name = "userid"),
+//            inverseJoinColumns = @JoinColumn(name = "roleid"))
+//    @JsonIgnoreProperties(value = "users")
+//    private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    private Set<UserRoles> roles = new HashSet<>();
 
     public User() {
     }
@@ -89,11 +95,11 @@ public class User {
         this.articles = articles;
     }
 
-    public Set<Role> getRoles() {
+    public Set<UserRoles> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<UserRoles> roles) {
         this.roles = roles;
     }
 }

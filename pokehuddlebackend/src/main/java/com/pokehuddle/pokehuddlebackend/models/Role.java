@@ -16,9 +16,16 @@ public class Role {
     @Column(nullable = false)
     private String role; // only 2 roles will be allowed in the gui, admin or member
 
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnoreProperties(value = "roles", allowSetters = true)
-    private Set<User> users = new HashSet<>();
+    //Example of how I would have implemented a many to many instead of doing the userRolesID and Userroles classes
+//    @ManyToMany(mappedBy = "roles")
+//    @JsonIgnoreProperties(value = "roles", allowSetters = true)
+//    private Set<User> users = new HashSet<>();
+
+    @OneToMany(mappedBy = "role",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    @JsonIgnoreProperties(value = "role", allowSetters = true)
+    private Set<UserRoles> users = new HashSet<>(); //using a set because a set only allows a unique element
 
     public Role() {
     }
@@ -43,11 +50,11 @@ public class Role {
         this.role = role;
     }
 
-    public Set<User> getUsers() {
+    public Set<UserRoles> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(Set<UserRoles> users) {
         this.users = users;
     }
 }
