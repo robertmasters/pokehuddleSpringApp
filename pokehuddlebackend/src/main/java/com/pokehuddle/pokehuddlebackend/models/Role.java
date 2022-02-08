@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long roleid;
@@ -16,7 +16,7 @@ public class Role {
     @Column(nullable = false)
     private String role; // only 2 roles will be allowed in the gui, admin or member
 
-    //Example of how I would have implemented a many to many instead of doing the userRolesID and Userroles classes
+    //Example of how I would have implemented a many to many instead of doing the userRolesID and Userroles classes and breaking it up into two one to many relationships
 //    @ManyToMany(mappedBy = "roles")
 //    @JsonIgnoreProperties(value = "roles", allowSetters = true)
 //    private Set<User> users = new HashSet<>();

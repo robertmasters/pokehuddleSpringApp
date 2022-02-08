@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 @Table(name = " userroles")
 @IdClass(UserRolesId.class)
-public class UserRoles implements Serializable { //using serializable since I am using a compound id in role and user
+public class UserRoles extends Auditable implements Serializable { //using serializable since I am using a compound id in role and user
     @Id
     @ManyToOne
     @JoinColumn(name = "userid")
