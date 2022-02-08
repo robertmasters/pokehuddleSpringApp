@@ -15,23 +15,23 @@ FROM users;
 
 
 
-INSERT INTO users (userid, username, email, password)
-    VALUES (1, 'neo', 'neo@pikipika.com', 'pika123'),
-           (2, 'Scarlett', 'scar@pikapika.com', 'pika123');
+INSERT INTO users (userid, username, email, password, createdby, createddate, lastmodifiedby, lastmodifieddate)
+    VALUES (1, 'neo', 'neo@pikipika.com', 'pika123', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (2, 'Scarlett', 'scar@pikapika.com', 'pika123', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 
-INSERT INTO roles (roleid, role)
-    VALUES (1, 'admin'),
-           (2, 'member');
+INSERT INTO roles (roleid, role, createdby, createddate, lastmodifiedby, lastmodifieddate)
+    VALUES (1, 'admin', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (2, 'member', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 
-INSERT INTO articles (articleid, title, body, author, userid)
-    VALUES (1, 'Pikachu is too popular', 'Sic de isto et tutius perducit ad actum ipsum, ut si dico Ego autem vadam lavari, ut mens mea in statu naturae conformior. Et similiter circa alias', 'Neo', 1 ),
-           (2, 'Top Ash Mistakes', 'Sic de isto et tutius perducit ad actum ipsum, ut si dico Ego autem vadam', 'Neo', 1),
-           (3, 'Mew vs Mewtwo', 'Sic de isto et tutius perducit ad actum ipsum, ut si dico “Ego autem vadam', 'Scarlett', 2);
+INSERT INTO articles (articleid, title, body, author, userid, createdby, createddate, lastmodifiedby, lastmodifieddate)
+    VALUES (1, 'Pikachu is too popular', 'Sic de isto et tutius perducit ad actum ipsum, ut si dico Ego autem vadam lavari, ut mens mea in statu naturae conformior. Et similiter circa alias', 'Neo', 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (2, 'Top Ash Mistakes', 'Sic de isto et tutius perducit ad actum ipsum, ut si dico Ego autem vadam', 'Neo', 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (3, 'Mew vs Mewtwo', 'Sic de isto et tutius perducit ad actum ipsum, ut si dico “Ego autem vadam', 'Scarlett', 2, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 
-INSERT INTO userroles
-    VALUES (1, 1),
-           (2, 1),
-           (2, 2);
+INSERT INTO userroles (userid, roleid, createdby, createddate, lastmodifiedby, lastmodifieddate)
+    VALUES (1, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (2, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (2, 2, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 
 --INSERT INTO preference (preferenceid, avatar, colorscheme)
 --    VALUES (4, 'pikachu', "maroon"),
