@@ -1,5 +1,6 @@
 package com.pokehuddle.pokehuddlebackend.services;
 
+import com.pokehuddle.pokehuddlebackend.exceptions.ResourceNotFoundException;
 import com.pokehuddle.pokehuddlebackend.models.Article;
 import com.pokehuddle.pokehuddlebackend.models.Role;
 import com.pokehuddle.pokehuddlebackend.models.User;
@@ -34,7 +35,7 @@ public class UserServicesImpl implements UserServices{
         //if there is an id, check to make sure its a valid id
         if (user.getUserid() != 0) {
             userrepository.findById(user.getUserid())
-                    .orElseThrow(() -> new EntityNotFoundException("User " + user.getUserid() + " not found!"));
+                    .orElseThrow(() -> new ResourceNotFoundException("User " + user.getUserid() + " not found!"));
             newUser.setUserid((user.getUserid()));
         }
 
@@ -48,7 +49,7 @@ public class UserServicesImpl implements UserServices{
         newUser.getRoles().clear();
         for(UserRoles r: user.getRoles()) {
             Role newRole = rolerepository.findById(r.getRole().getRoleid())
-                    .orElseThrow(() -> new EntityNotFoundException("Role " + r.getRole().getRoleid() + " not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Role " + r.getRole().getRoleid() + " not found"));
 
             newUser.getRoles().add(new UserRoles(newUser, newRole));
         }
@@ -81,14 +82,14 @@ public class UserServicesImpl implements UserServices{
     public User findUserById(long id) {
 
         return userrepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User " + id + " Not Found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("User " + id + " Not Found!"));
     }
 
     @Override
     public User findUserByUsername(String username) {
         User returnUser = userrepository.findByUsername(username);
         if(returnUser == null) {
-            throw new EntityNotFoundException("User "+ username + " Not Found");
+            throw new ResourceNotFoundException("User "+ username + " Not Found");
         }
         return returnUser;
     }
@@ -105,14 +106,14 @@ public class UserServicesImpl implements UserServices{
         if (userrepository.findById(userid).isPresent()) {
             userrepository.deleteById(userid);
         } else {
-            throw new EntityNotFoundException("User " + userid + " not found!");
+            throw new ResourceNotFoundException("User " + userid + " not found!");
         }
     }
 
     @Override
     public User update(User updateUser, long userid) {
         User currentUser = userrepository.findById(userid)
-                .orElseThrow(() -> new EntityNotFoundException("User " + userid + " not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("User " + userid + " not found!"));
 
 
         //if no new data is sent for these fields, then leave whatever is already on there.
@@ -140,7 +141,7 @@ public class UserServicesImpl implements UserServices{
             currentUser.getRoles().clear();
             for (UserRoles r : updateUser.getRoles()) {
                 Role newRole = rolerepository.findById(r.getRole().getRoleid())
-                        .orElseThrow(() -> new EntityNotFoundException("Role " + r.getRole().getRoleid() + " not found"));
+                        .orElseThrow(() -> new ResourceNotFoundException("Role " + r.getRole().getRoleid() + " not found"));
 
                 currentUser.getRoles().add(new UserRoles(currentUser, newRole));
             }
