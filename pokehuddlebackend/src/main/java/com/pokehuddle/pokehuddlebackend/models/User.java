@@ -1,6 +1,9 @@
 package com.pokehuddle.pokehuddlebackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -84,6 +87,12 @@ public class User extends Auditable{
     }
 
     public void setPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(password);
+    }
+
+    //set the password after we know it's been already encrypted
+    public void setNoEncryptPassword(String password) {
         this.password = password;
     }
 
@@ -101,5 +110,17 @@ public class User extends Auditable{
 
     public void setRoles(Set<UserRoles> roles) {
         this.roles = roles;
+    }
+
+    @JsonIgnore
+    public List<SimpleGrantedAuthority> getAuthority() {
+        List<SimpleGrantedAuthority> returnList = new ArrayList<>();
+
+        for(UserRoles r : this.roles) {
+            String myRole = "ROLE_" + r.getRole().getRole().toUpperCase();
+            returnList.add(new SimpleGrantedAuthority(myRole));
+        }
+
+        return returnList;
     }
 }

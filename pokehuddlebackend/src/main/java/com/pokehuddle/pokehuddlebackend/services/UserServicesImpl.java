@@ -42,7 +42,7 @@ public class UserServicesImpl implements UserServices{
         //primitive data type/String
         newUser.setUsername(user.getUsername());
         newUser.setEmail(user.getEmail());
-        newUser.setPassword(user.getPassword());
+        newUser.setNoEncryptPassword(user.getPassword());
 
         //collections
         //many to many
@@ -127,7 +127,7 @@ public class UserServicesImpl implements UserServices{
         }
 
         if (updateUser.getPassword() != null) {
-            currentUser.setPassword(updateUser.getPassword());
+            currentUser.setNoEncryptPassword(updateUser.getPassword());
         }
 
         //data types that are primitive such as long, boolean, char. etc are handles a little different, and have to be modified on the model level as well.
