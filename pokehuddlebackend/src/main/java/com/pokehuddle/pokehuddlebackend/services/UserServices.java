@@ -20,5 +20,5 @@ public interface UserServices {
 
     User update(User updateUser, long userid);
 
-//    public void deleteAll();
+    public void deleteAll();
 }

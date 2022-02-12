@@ -14,4 +14,6 @@ public interface ArticleServices {
     void delete(long articleid);
 
     Article update(Article updateArticle, long articleid);
+
+    public void deleteAll();
 }

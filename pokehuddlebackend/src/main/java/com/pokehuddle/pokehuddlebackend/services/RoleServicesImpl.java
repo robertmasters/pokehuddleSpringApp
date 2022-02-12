@@ -4,6 +4,7 @@ import com.pokehuddle.pokehuddlebackend.models.Role;
 import com.pokehuddle.pokehuddlebackend.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -20,6 +21,12 @@ public class RoleServicesImpl implements RoleServices{
     @Override
     public Role save(Role role) {
         return rolerepository.save(role);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void deleteAll() {
+        rolerepository.deleteAll();
     }
 
     //trick on how to get a username

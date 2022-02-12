@@ -136,7 +136,6 @@ public class UserServicesImpl implements UserServices{
         //collections are better handles as a complete replace to avoid confusion and complicated logic
 
         //many to many
-
         if(updateUser.getRoles().size() >0 ) {
             currentUser.getRoles().clear();
             for (UserRoles r : updateUser.getRoles()) {
@@ -164,9 +163,9 @@ public class UserServicesImpl implements UserServices{
         return userrepository.save(currentUser);
     }
 
-//    @Transactional(propagation = Propagation.REQUIRES_NEW)
-//    @Override
-//    public void deleteAll() {
-//        userrepository.deleteAll();
-//    }
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void deleteAll() {
+        userrepository.deleteAll();
+    }
 }

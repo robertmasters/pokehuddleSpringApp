@@ -4,4 +4,6 @@ import com.pokehuddle.pokehuddlebackend.models.Role;
 
 public interface RoleServices {
     Role save(Role role);
+
+    public void deleteAll();
 }

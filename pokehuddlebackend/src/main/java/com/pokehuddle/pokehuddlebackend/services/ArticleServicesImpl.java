@@ -5,6 +5,7 @@ import com.pokehuddle.pokehuddlebackend.repositories.ArticleRepository;
 import com.pokehuddle.pokehuddlebackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
@@ -88,5 +89,11 @@ public class ArticleServicesImpl implements ArticleServices{
         }
 
         return articlerepository.save(currentArticle);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void deleteAll() {
+        articlerepository.deleteAll();
     }
 }
