@@ -30,8 +30,8 @@ public class Role extends Auditable{
     public Role() {
     }
 
-    public Role(String role) {
-        this.name = role;
+    public Role(String name) {
+        this.name = name;
     }
 
     public long getRoleid() {
