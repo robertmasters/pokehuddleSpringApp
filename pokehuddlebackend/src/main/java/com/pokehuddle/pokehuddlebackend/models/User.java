@@ -2,6 +2,7 @@ package com.pokehuddle.pokehuddlebackend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -26,6 +27,7 @@ public class User extends Auditable{
     private String email;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     //cascade type all makes it so that whatever happens to user also happens to article
@@ -52,10 +54,10 @@ public class User extends Auditable{
     }
 
     //if it is a single item, add it to the constructor, if its a collection dont add it to the constructor.
-    public User(String name, String email, String password) {
-        this.username = name;
+    public User(String username, String email, String password) {
+        setUsername(username);
         this.email = email;
-        this.password = password;
+        setPassword(password);
     }
 
     public long getUserid() {
@@ -91,7 +93,7 @@ public class User extends Auditable{
         this.password = passwordEncoder.encode(password);
     }
 
-    //set the password after we know it's been already encrypted
+    //set the password after we know it's been already encrypted somewhere else, so that we dont reencrypt it again
     public void setNoEncryptPassword(String password) {
         this.password = password;
     }
@@ -117,7 +119,7 @@ public class User extends Auditable{
         List<SimpleGrantedAuthority> returnList = new ArrayList<>();
 
         for(UserRoles r : this.roles) {
-            String myRole = "ROLE_" + r.getRole().getRole().toUpperCase();
+            String myRole = "ROLE_" + r.getRole().getName().toUpperCase();
             returnList.add(new SimpleGrantedAuthority(myRole));
         }
 

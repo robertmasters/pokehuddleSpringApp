@@ -1,8 +1,6 @@
 package com.pokehuddle.pokehuddlebackend.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,17 +9,16 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-    private String CLIENT_ID = System.getenv("OAUTHCLIENTID");
-    private String CLIENT_SECRET = System.getenv("OAUTHCLIENTSECRET");
+    private final String CLIENT_ID = System.getenv("OAUTHCLIENTID");
+    private final String CLIENT_SECRET = System.getenv("OAUTHCLIENTSECRET");
 
     //Hardcoded environment variables
-//    private String CLIENT_ID = "lambda-client";
-//    private String CLIENT_SECRET = "lambda-secret";
+//    private final String CLIENT_ID = "pika-client";
+//    private final String CLIENT_SECRET = "pika-secret";
 
     private final String GRANT_TYPE_PASSWORD = "password";
     private final String AUTHORIZATION_CODE = "authorization_code";
@@ -42,15 +39,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private PasswordEncoder encoder;
 
     @Override
-    public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
+    public void configure(ClientDetailsServiceConfigurer configure) throws Exception {
         //reason to store in memory
         //memory is fast to access
         //if system is shut down everyone looses access and have to start the auth process over
         //memory is alot harder to hack than disc space
-        configurer.inMemory()
+        configure.inMemory()
                 .withClient(CLIENT_ID)
                 .secret(encoder.encode(CLIENT_SECRET))
-                .authorizedGrantTypes(SCOPE_READ, SCOPE_WRITE, SCOPE_TRUST)
+                .authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE)
+                .scopes(SCOPE_READ, SCOPE_WRITE, SCOPE_TRUST)
                 .accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS);
     }
 
@@ -59,5 +57,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
        endpoints.tokenStore(tokenStore)
                .authenticationManager(authenticationManager);
        endpoints.pathMapping("/oauth/token", "/login");
+
     }
 }

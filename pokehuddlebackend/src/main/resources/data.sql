@@ -19,7 +19,7 @@ INSERT INTO users (userid, username, email, password, createdby, createddate, la
     VALUES (1, 'neo', 'neo@pikipika.com', 'pika123', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
            (2, 'Scarlett', 'scar@pikapika.com', 'pika123', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 
-INSERT INTO roles (roleid, role, createdby, createddate, lastmodifiedby, lastmodifieddate)
+INSERT INTO roles (roleid, name, createdby, createddate, lastmodifiedby, lastmodifieddate)
     VALUES (1, 'admin', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
            (2, 'member', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 

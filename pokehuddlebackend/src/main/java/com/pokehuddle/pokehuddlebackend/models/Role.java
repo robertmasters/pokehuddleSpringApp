@@ -14,7 +14,7 @@ public class Role extends Auditable{
     private long roleid;
 
     @Column(nullable = false)
-    private String role; // only 2 roles will be allowed in the gui, admin or member
+    private String name; // only 2 roles will be allowed in the gui, admin or member
 
     //Example of how I would have implemented a many to many instead of doing the userRolesID and Userroles classes and breaking it up into two one to many relationships
 //    @ManyToMany(mappedBy = "roles")
@@ -31,7 +31,7 @@ public class Role extends Auditable{
     }
 
     public Role(String role) {
-        this.role = role;
+        this.name = role;
     }
 
     public long getRoleid() {
@@ -42,12 +42,12 @@ public class Role extends Auditable{
         this.roleid = roleid;
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<UserRoles> getUsers() {

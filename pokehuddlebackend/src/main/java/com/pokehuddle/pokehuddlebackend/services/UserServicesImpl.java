@@ -9,9 +9,9 @@ import com.pokehuddle.pokehuddlebackend.repositories.RoleRepository;
 import com.pokehuddle.pokehuddlebackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,4 +163,10 @@ public class UserServicesImpl implements UserServices{
 
         return userrepository.save(currentUser);
     }
+
+//    @Transactional(propagation = Propagation.REQUIRES_NEW)
+//    @Override
+//    public void deleteAll() {
+//        userrepository.deleteAll();
+//    }
 }

@@ -1,6 +1,5 @@
 package com.pokehuddle.pokehuddlebackend.config;
 
-
 import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;

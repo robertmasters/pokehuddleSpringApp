@@ -4,8 +4,8 @@ import com.pokehuddle.pokehuddlebackend.models.Role;
 import com.pokehuddle.pokehuddlebackend.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @Transactional
 @Service

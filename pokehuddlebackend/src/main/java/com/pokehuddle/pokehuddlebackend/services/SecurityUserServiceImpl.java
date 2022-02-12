@@ -4,12 +4,13 @@ import com.pokehuddle.pokehuddlebackend.exceptions.ResourceNotFoundException;
 import com.pokehuddle.pokehuddlebackend.models.User;
 import com.pokehuddle.pokehuddlebackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+
+@Transactional
 @Service(value = "securityUserService")
 public class SecurityUserServiceImpl implements UserDetailsService {
 
@@ -20,7 +21,8 @@ public class SecurityUserServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws ResourceNotFoundException {
         User user = userRepository.findByUsername(s);
         if (user == null) {
-            throw new ResourceNotFoundException("Invalid username or password");
+            //on a production system use "Invalid username or password" to make it harder to figure out for any bad actors
+            throw new ResourceNotFoundException("Invalid username");
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthority());
     }

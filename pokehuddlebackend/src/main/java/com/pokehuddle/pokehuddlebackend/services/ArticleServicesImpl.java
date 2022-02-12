@@ -1,15 +1,13 @@
 package com.pokehuddle.pokehuddlebackend.services;
 
 import com.pokehuddle.pokehuddlebackend.models.Article;
-import com.pokehuddle.pokehuddlebackend.models.Role;
-import com.pokehuddle.pokehuddlebackend.models.User;
 import com.pokehuddle.pokehuddlebackend.repositories.ArticleRepository;
 import com.pokehuddle.pokehuddlebackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
