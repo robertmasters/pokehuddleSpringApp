@@ -26,7 +26,6 @@ public class UserAuditing implements AuditorAware<String> {
             //this default only works if using seed data
             uname = "SYSTEM";
         }
-        System.out.println("uname: " + uname);
         return Optional.of(uname);
     }
 }

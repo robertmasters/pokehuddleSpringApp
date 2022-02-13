@@ -17,8 +17,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final String CLIENT_SECRET = System.getenv("OAUTHCLIENTSECRET");
 
     //Hardcoded environment variables
-//    private final String CLIENT_ID = "pika-client";
-//    private final String CLIENT_SECRET = "pika-secret";
+//    private final String CLIENT_ID = "this is the hardcoded id";
+//    private final String CLIENT_SECRET = "this is the harcoded secret";
 
     private final String GRANT_TYPE_PASSWORD = "password";
     private final String AUTHORIZATION_CODE = "authorization_code";
