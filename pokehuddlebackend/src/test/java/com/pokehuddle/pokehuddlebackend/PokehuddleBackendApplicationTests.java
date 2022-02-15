@@ -11,5 +11,4 @@ public class PokehuddleBackendApplicationTests {
 	public static void main(String[] args) {
 		SpringApplication.run(PokehuddleBackendApplication.class, args);
 	}
-
 }
