@@ -10,6 +10,7 @@ import com.pokehuddle.pokehuddlebackend.services.RoleServices;
 import com.pokehuddle.pokehuddlebackend.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
  * after the application context has been loaded.
  */
 @Transactional
+@ConditionalOnProperty(
+        prefix = "command.line.runner",
+        value = "enabled",
+        havingValue = "true", //when true spring recognized this class, if false it doesnt
+        matchIfMissing = true //if having value is not mentioned then the default will be true
+)
 @Component
 public class SeedData implements CommandLineRunner {
     @Autowired
