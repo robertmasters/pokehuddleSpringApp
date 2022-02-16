@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > RoleServices</title>
+  <title>Coverage Report > UserServices</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -20,14 +20,14 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.pokehuddle.pokehuddlebackend.services</a>
 </div>
 
-<h1>Coverage Summary for Class: RoleServices (com.pokehuddle.pokehuddlebackend.services)</h1>
+<h1>Coverage Summary for Class: UserServices (com.pokehuddle.pokehuddlebackend.services)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
 </tr>
 <tr>
-  <td class="name">RoleServices</td>
+  <td class="name">UserServices</td>
 </tr>
 
 </table>
@@ -39,13 +39,27 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.pokehuddle.pokehuddlebackend.services;
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import com.pokehuddle.pokehuddlebackend.models.Role;
+<i class="no-highlight">3</i>&nbsp;
 <i class="no-highlight">4</i>&nbsp;
-<i class="no-highlight">5</i>&nbsp;public interface RoleServices {
-<i class="no-highlight">6</i>&nbsp;    Role save(Role role);
-<i class="no-highlight">7</i>&nbsp;
-<i class="no-highlight">8</i>&nbsp;    public void deleteAll();
-<i class="no-highlight">9</i>&nbsp;}
+<i class="no-highlight">5</i>&nbsp;import com.pokehuddle.pokehuddlebackend.models.User;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;import java.util.List;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;public interface UserServices {
+<i class="no-highlight">10</i>&nbsp;     User save(User user);
+<i class="no-highlight">11</i>&nbsp;
+<i class="no-highlight">12</i>&nbsp;    List&lt;User&gt; findAllUsers();
+<i class="no-highlight">13</i>&nbsp;     User findUserById(long id);
+<i class="no-highlight">14</i>&nbsp;     User findUserByUsername(String username);
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;    List&lt;User&gt; findByUsernameLike(String subusername);
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;    void delete(long userid);
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;    User update(User updateUser, long userid);
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;    public void deleteAll();
+<i class="no-highlight">23</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -72,7 +86,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-02-15 21:33</div>
+    <div style="float:right;">generated on 2022-02-15 22:07</div>
 </div>
 </body>
 </html>

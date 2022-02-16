@@ -10,14 +10,17 @@ import com.pokehuddle.pokehuddlebackend.repositories.RoleRepository;
 import com.pokehuddle.pokehuddlebackend.repositories.UserRepository;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import static org.mockito.ArgumentMatchers.any;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,8 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = PokehuddleBackendApplicationTests.class,
         properties = {"command.line.runner.enabled = false"})
+//this method forces the test to run in alphabetical order based off method name, If i want to manipulate the order then I can add a letter to the beginning of the method name such as a_findID, b_findAll, ba_findname, etc, otherwise java will find the most efficient way to run the test
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserServicesImplUnitTestNoDB {
 
     //stubs -> fake methods
@@ -107,6 +112,25 @@ public class UserServicesImplUnitTestNoDB {
 
     @Test
     public void save() {
+        //create a user to save
+        User u2 = new User(
+                "neo",
+                "neo@pikipika.com",
+                "pika123");
+        u2.getArticles()
+                .add(new Article("Pikachu is too popular",
+                        "Sic de isto et tutius perducit ad actum ipsum, ut si dico Ego autem vadam lavari, ut mens mea in statu naturae conformior. Et similiter circa alias",
+                        "Neo",
+                        u2));
+        u2.getArticles()
+                .add(new Article("Top Ash Mistakes",
+                        "Sic de isto et tutius perducit ad actum ipsum, ut si dico Ego autem vadam",
+                        "Neo",
+                        u2));
+        Mockito.when(userRepository.save(any(User.class)))
+                .thenReturn(u2);
+
+
     }
 
     @Test
