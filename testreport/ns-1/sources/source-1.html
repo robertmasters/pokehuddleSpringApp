@@ -1,0 +1,214 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ArticleServicesImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.pokehuddle.pokehuddlebackend.services</a>
+</div>
+
+<h1>Coverage Summary for Class: ArticleServicesImpl (com.pokehuddle.pokehuddlebackend.services)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ArticleServicesImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    3.6%
+  </span>
+  <span class="absValue">
+    (1/28)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ArticleServicesImpl$$EnhancerBySpringCGLIB$$f9737902</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    3.6%
+  </span>
+  <span class="absValue">
+    (1/28)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.pokehuddle.pokehuddlebackend.services;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.pokehuddle.pokehuddlebackend.models.Article;
+<i class="no-highlight">4</i>&nbsp;import com.pokehuddle.pokehuddlebackend.repositories.ArticleRepository;
+<i class="no-highlight">5</i>&nbsp;import com.pokehuddle.pokehuddlebackend.repositories.UserRepository;
+<i class="no-highlight">6</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i class="no-highlight">7</i>&nbsp;import org.springframework.stereotype.Service;
+<i class="no-highlight">8</i>&nbsp;import org.springframework.transaction.annotation.Propagation;
+<i class="no-highlight">9</i>&nbsp;import org.springframework.transaction.annotation.Transactional;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;import javax.persistence.EntityNotFoundException;
+<i class="no-highlight">12</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">13</i>&nbsp;import java.util.List;
+<i class="no-highlight">14</i>&nbsp;
+<i class="no-highlight">15</i>&nbsp;@Transactional
+<i class="no-highlight">16</i>&nbsp;@Service
+<b class="fc"><i class="no-highlight">17</i>&nbsp;public class ArticleServicesImpl implements ArticleServices{</b>
+<i class="no-highlight">18</i>&nbsp;
+<i class="no-highlight">19</i>&nbsp;    @Autowired
+<i class="no-highlight">20</i>&nbsp;    private ArticleRepository articlerepository;
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;    @Autowired
+<i class="no-highlight">23</i>&nbsp;    private UserRepository userrepository;
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    @Transactional
+<i class="no-highlight">26</i>&nbsp;    @Override
+<i class="no-highlight">27</i>&nbsp;    public Article save(Article article) {
+<b class="nc"><i class="no-highlight">28</i>&nbsp;        return articlerepository.save(article);</b>
+<i class="no-highlight">29</i>&nbsp;    }
+<i class="no-highlight">30</i>&nbsp;
+<i class="no-highlight">31</i>&nbsp;    @Override
+<i class="no-highlight">32</i>&nbsp;    public List&lt;Article&gt; findAllArticles() {
+<b class="nc"><i class="no-highlight">33</i>&nbsp;        List&lt;Article&gt; list = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">34</i>&nbsp;        articlerepository.findAll()</b>
+<b class="nc"><i class="no-highlight">35</i>&nbsp;                .iterator()</b>
+<b class="nc"><i class="no-highlight">36</i>&nbsp;                .forEachRemaining(list::add);</b>
+<b class="nc"><i class="no-highlight">37</i>&nbsp;        return list;</b>
+<i class="no-highlight">38</i>&nbsp;    }
+<i class="no-highlight">39</i>&nbsp;
+<i class="no-highlight">40</i>&nbsp;    @Override
+<i class="no-highlight">41</i>&nbsp;    public Article findArticleById(long id) {
+<b class="nc"><i class="no-highlight">42</i>&nbsp;        return articlerepository.findById(id)</b>
+<b class="nc"><i class="no-highlight">43</i>&nbsp;                .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Article &quot; + id + &quot; Not Found&quot;));</b>
+<i class="no-highlight">44</i>&nbsp;    }
+<i class="no-highlight">45</i>&nbsp;
+<i class="no-highlight">46</i>&nbsp;    @Override
+<i class="no-highlight">47</i>&nbsp;    public List&lt;Article&gt; findByTitleLike(String subtitle) {
+<b class="nc"><i class="no-highlight">48</i>&nbsp;        List&lt;Article&gt; returnList = articlerepository.findByTitleContainingIgnoringCase(subtitle);</b>
+<b class="nc"><i class="no-highlight">49</i>&nbsp;        return returnList;</b>
+<i class="no-highlight">50</i>&nbsp;    }
+<i class="no-highlight">51</i>&nbsp;
+<i class="no-highlight">52</i>&nbsp;    @Override
+<i class="no-highlight">53</i>&nbsp;    public void delete(long articleid) {
+<b class="nc"><i class="no-highlight">54</i>&nbsp;        if (articlerepository.findById(articleid).isPresent()) {</b>
+<b class="nc"><i class="no-highlight">55</i>&nbsp;            articlerepository.deleteById(articleid);</b>
+<i class="no-highlight">56</i>&nbsp;        } else {
+<b class="nc"><i class="no-highlight">57</i>&nbsp;            throw new EntityNotFoundException(&quot;Article &quot; + articleid + &quot; not found!&quot;);</b>
+<i class="no-highlight">58</i>&nbsp;        }
+<i class="no-highlight">59</i>&nbsp;    }
+<i class="no-highlight">60</i>&nbsp;
+<i class="no-highlight">61</i>&nbsp;    @Transactional
+<i class="no-highlight">62</i>&nbsp;    @Override
+<i class="no-highlight">63</i>&nbsp;    public Article update(Article updateArticle, long articleid) {
+<i class="no-highlight">64</i>&nbsp;
+<i class="no-highlight">65</i>&nbsp;        //handles id
+<b class="nc"><i class="no-highlight">66</i>&nbsp;        Article currentArticle = articlerepository.findById(articleid)</b>
+<b class="nc"><i class="no-highlight">67</i>&nbsp;                .orElseThrow(() -&gt; new EntityNotFoundException(&quot;Article &quot; + articleid + &quot; not found!&quot;));</b>
+<i class="no-highlight">68</i>&nbsp;
+<i class="no-highlight">69</i>&nbsp;
+<i class="no-highlight">70</i>&nbsp;
+<i class="no-highlight">71</i>&nbsp;        //primitive data type/String
+<b class="nc"><i class="no-highlight">72</i>&nbsp;        if (updateArticle.getTitle() != null) {</b>
+<b class="nc"><i class="no-highlight">73</i>&nbsp;            currentArticle.setTitle(updateArticle.getTitle());</b>
+<i class="no-highlight">74</i>&nbsp;        }
+<i class="no-highlight">75</i>&nbsp;
+<b class="nc"><i class="no-highlight">76</i>&nbsp;        if (updateArticle.getBody() != null) {</b>
+<b class="nc"><i class="no-highlight">77</i>&nbsp;            currentArticle.setBody(updateArticle.getBody());</b>
+<i class="no-highlight">78</i>&nbsp;        }
+<i class="no-highlight">79</i>&nbsp;
+<b class="nc"><i class="no-highlight">80</i>&nbsp;        if (updateArticle.getAuthor() != null) {</b>
+<b class="nc"><i class="no-highlight">81</i>&nbsp;            currentArticle.setAuthor(updateArticle.getAuthor());</b>
+<i class="no-highlight">82</i>&nbsp;        }
+<i class="no-highlight">83</i>&nbsp;
+<i class="no-highlight">84</i>&nbsp;        //since data type is an object I can check for null
+<b class="nc"><i class="no-highlight">85</i>&nbsp;        if (updateArticle.getUser() != null) {</b>
+<b class="nc"><i class="no-highlight">86</i>&nbsp;            currentArticle.setUser(userrepository.findById(updateArticle.getUser()</b>
+<b class="nc"><i class="no-highlight">87</i>&nbsp;                    .getUserid())</b>
+<b class="nc"><i class="no-highlight">88</i>&nbsp;                    .orElseThrow(() -&gt; new EntityNotFoundException(&quot;User &quot; + updateArticle.getUser().getUserid() + &quot; not found!&quot;)));</b>
+<i class="no-highlight">89</i>&nbsp;        }
+<i class="no-highlight">90</i>&nbsp;
+<b class="nc"><i class="no-highlight">91</i>&nbsp;        return articlerepository.save(currentArticle);</b>
+<i class="no-highlight">92</i>&nbsp;    }
+<i class="no-highlight">93</i>&nbsp;
+<i class="no-highlight">94</i>&nbsp;    @Transactional(propagation = Propagation.REQUIRES_NEW)
+<i class="no-highlight">95</i>&nbsp;    @Override
+<i class="no-highlight">96</i>&nbsp;    public void deleteAll() {
+<b class="nc"><i class="no-highlight">97</i>&nbsp;        articlerepository.deleteAll();</b>
+<i class="no-highlight">98</i>&nbsp;    }
+<i class="no-highlight">99</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-02-15 21:33</div>
+</div>
+</body>
+</html>
