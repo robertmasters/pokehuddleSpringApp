@@ -22,6 +22,11 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         if(dbValue.equalsIgnoreCase("POSTGRESQL")) {
+
+            System.out.println("***");
+            System.out.println(dbURL);
+            System.out.println("***");
+
             //configure for postgress
             HikariConfig config = new HikariConfig();
             config.setDriverClassName("org.postgresql.Driver");
