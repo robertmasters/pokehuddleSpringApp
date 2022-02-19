@@ -26,6 +26,9 @@ public class UserServicesImpl implements UserServices{
     @Autowired
     private RoleRepository rolerepository;
 
+    @Autowired
+    private HelperFunctions helperFunctions;
+
     //whenever a method changes something in the database make it transactional
     @Transactional
     @Override
@@ -109,58 +112,64 @@ public class UserServicesImpl implements UserServices{
             throw new ResourceNotFoundException("User " + userid + " not found!");
         }
     }
-
+    @Transactional
     @Override
     public User update(User updateUser, long userid) {
         User currentUser = userrepository.findById(userid)
                 .orElseThrow(() -> new ResourceNotFoundException("User " + userid + " not found!"));
 
+        if(helperFunctions.isAuthorizedToMakeChange(currentUser.getUsername())) {
 
-        //if no new data is sent for these fields, then leave whatever is already on there.
-        //data type String
-        if (updateUser.getUsername() != null) {
-            currentUser.setUsername(updateUser.getUsername());
-        }
 
-        if (updateUser.getEmail() != null) {
-            currentUser.setEmail(updateUser.getEmail());
-        }
-
-        if (updateUser.getPassword() != null) {
-            currentUser.setNoEncryptPassword(updateUser.getPassword());
-        }
-
-        //data types that are primitive such as long, boolean, char. etc are handles a little different, and have to be modified on the model level as well.
-
-        //collections
-        //collections are better handles as a complete replace to avoid confusion and complicated logic
-
-        //many to many
-        if(updateUser.getRoles().size() >0 ) {
-            currentUser.getRoles().clear();
-            for (UserRoles r : updateUser.getRoles()) {
-                Role newRole = rolerepository.findById(r.getRole().getRoleid())
-                        .orElseThrow(() -> new ResourceNotFoundException("Role " + r.getRole().getRoleid() + " not found"));
-
-                currentUser.getRoles().add(new UserRoles(currentUser, newRole));
+            //if no new data is sent for these fields, then leave whatever is already on there.
+            //data type String
+            if (updateUser.getUsername() != null) {
+                currentUser.setUsername(updateUser.getUsername());
             }
-        }
 
-        //one to many
-        if(updateUser.getArticles().size() > 0) {
-            currentUser.getArticles().clear();
-            for (Article a : updateUser.getArticles()) {
-                Article newArticle = new Article();
-                newArticle.setAuthor(a.getAuthor());
-                newArticle.setTitle(a.getTitle());
-                newArticle.setBody(a.getBody());
-                newArticle.setUser(currentUser);
-
-                currentUser.getArticles().add(newArticle);
+            if (updateUser.getEmail() != null) {
+                currentUser.setEmail(updateUser.getEmail());
             }
-        }
 
-        return userrepository.save(currentUser);
+            if (updateUser.getPassword() != null) {
+                currentUser.setNoEncryptPassword(updateUser.getPassword());
+            }
+
+            //data types that are primitive such as long, boolean, char. etc are handles a little different, and have to be modified on the model level as well.
+
+            //collections
+            //collections are better handles as a complete replace to avoid confusion and complicated logic
+
+            //many to many
+            if (updateUser.getRoles().size() > 0) {
+                currentUser.getRoles().clear();
+                for (UserRoles r : updateUser.getRoles()) {
+                    Role newRole = rolerepository.findById(r.getRole().getRoleid())
+                            .orElseThrow(() -> new ResourceNotFoundException("Role " + r.getRole().getRoleid() + " not found"));
+
+                    currentUser.getRoles().add(new UserRoles(currentUser, newRole));
+                }
+            }
+
+            //one to many
+            if (updateUser.getArticles().size() > 0) {
+                currentUser.getArticles().clear();
+                for (Article a : updateUser.getArticles()) {
+                    Article newArticle = new Article();
+                    newArticle.setAuthor(a.getAuthor());
+                    newArticle.setTitle(a.getTitle());
+                    newArticle.setBody(a.getBody());
+                    newArticle.setUser(currentUser);
+
+                    currentUser.getArticles().add(newArticle);
+                }
+            }
+
+            return userrepository.save(currentUser);
+        } else
+        {
+            throw new ResourceNotFoundException("This use is not authorized to make change");
+        }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
