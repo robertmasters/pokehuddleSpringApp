@@ -25,7 +25,7 @@ public class SecurityUserServiceImpl implements UserDetailsService {
         User user = userRepository.findByUsername(s.toLowerCase());
         if (user == null) {
             //on a production system use "Invalid username or password" to make it harder to figure out for any bad actors
-            throw new EntityNotFoundException("Invalid username");
+            throw new ResourceNotFoundException("Invalid username");
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthority());
     }

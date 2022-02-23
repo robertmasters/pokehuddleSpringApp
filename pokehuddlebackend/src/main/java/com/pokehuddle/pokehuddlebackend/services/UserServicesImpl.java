@@ -43,7 +43,7 @@ public class UserServicesImpl implements UserServices{
 
         //primitive data type/String
         newUser.setUsername(user.getUsername().toLowerCase());
-        newUser.setEmail(user.getEmail());
+        newUser.setEmail(user.getEmail().toLowerCase());
         newUser.setNoEncryptPassword(user.getPassword());
 
         //collections

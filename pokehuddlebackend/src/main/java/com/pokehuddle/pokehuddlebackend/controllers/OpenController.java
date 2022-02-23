@@ -36,7 +36,7 @@ public class OpenController {
 
     @PostMapping(value = "/createnewuser", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> addSelf(HttpServletRequest httpServletRequest, @RequestBody UserMinimum newminuser)  throws Exception {
-        //create new user object
+        //create new user
         User newuser = new User();
         //set up needed data
         newuser.setUsername(newminuser.getUsername());

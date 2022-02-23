@@ -18,13 +18,13 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     //@Value searches for enviornment variables in this order: current system or in hiroku in config variables,if not found then it searches in application.properties, then if still havent found, then it will look in property source
-    @Value("${OATHCLIENTID:}")
-    private String CLIENT_ID;
-//    private final String CLIENT_ID = System.getenv("OAUTHCLIENTID");
+//    @Value("${OATHCLIENTID:}") //I couldnt get this syntax to work
+//    private String CLIENT_ID;
+    private final String CLIENT_ID = System.getenv("OAUTHCLIENTID");
 
-    @Value("${OAUTHCLIENTSECRET}")
-    private String CLIENT_SECRET;
-//    private final String CLIENT_SECRET = System.getenv("OAUTHCLIENTSECRET");
+//    @Value("${OAUTHCLIENTSECRET:}")
+//    private String CLIENT_SECRET;
+    private final String CLIENT_SECRET = System.getenv("OAUTHCLIENTSECRET");
 
     //Hardcoded environment variables
 //    private final String CLIENT_ID = "this is the hardcoded id";
