@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-@PropertySource(value = "file:/Users/rober/pokehuddlerest.properties", ignoreResourceNotFound = true) // if cannot find file ignore
+@PropertySource(value = "file:/Users/rober/pokehuddleserver.properties", ignoreResourceNotFound = true) // if cannot find file ignore
 public class PokehuddleBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PokehuddleBackendApplication.class, args);
 	}
-
 }

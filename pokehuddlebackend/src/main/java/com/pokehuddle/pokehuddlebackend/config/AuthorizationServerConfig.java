@@ -3,6 +3,7 @@ package com.pokehuddle.pokehuddlebackend.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 
 @Configuration
 @EnableAuthorizationServer
+//@PropertySource(value = "file:/Users/rober/pokehuddleserver.properties", ignoreResourceNotFound = true)
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     //@Value searches for enviornment variables in this order: current system or in hiroku in config variables,if not found then it searches in application.properties, then if still havent found, then it will look in property source

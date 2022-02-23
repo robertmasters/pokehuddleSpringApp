@@ -5,7 +5,6 @@ import com.pokehuddle.pokehuddlebackend.models.Article;
 import com.pokehuddle.pokehuddlebackend.models.Role;
 import com.pokehuddle.pokehuddlebackend.models.User;
 import com.pokehuddle.pokehuddlebackend.models.UserRoles;
-import com.pokehuddle.pokehuddlebackend.repositories.RoleRepository;
 import com.pokehuddle.pokehuddlebackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class UserServicesImpl implements UserServices{
     private UserRepository userrepository;
 
     @Autowired
-    private RoleRepository rolerepository;
+    private RoleServices roleServices;
 
     @Autowired
     private HelperFunctions helperFunctions;
@@ -39,11 +38,11 @@ public class UserServicesImpl implements UserServices{
         if (user.getUserid() != 0) {
             userrepository.findById(user.getUserid())
                     .orElseThrow(() -> new ResourceNotFoundException("User " + user.getUserid() + " not found!"));
-            newUser.setUserid((user.getUserid()));
+            newUser.setUserid(user.getUserid());
         }
 
         //primitive data type/String
-        newUser.setUsername(user.getUsername());
+        newUser.setUsername(user.getUsername().toLowerCase());
         newUser.setEmail(user.getEmail());
         newUser.setNoEncryptPassword(user.getPassword());
 
@@ -51,8 +50,7 @@ public class UserServicesImpl implements UserServices{
         //many to many
         newUser.getRoles().clear();
         for(UserRoles r: user.getRoles()) {
-            Role newRole = rolerepository.findById(r.getRole().getRoleid())
-                    .orElseThrow(() -> new ResourceNotFoundException("Role " + r.getRole().getRoleid() + " not found"));
+            Role newRole = roleServices.findRoleById(r.getRole().getRoleid());
 
             newUser.getRoles().add(new UserRoles(newUser, newRole));
         }
@@ -124,7 +122,7 @@ public class UserServicesImpl implements UserServices{
             //if no new data is sent for these fields, then leave whatever is already on there.
             //data type String
             if (updateUser.getUsername() != null) {
-                currentUser.setUsername(updateUser.getUsername());
+                currentUser.setUsername(updateUser.getUsername().toLowerCase());
             }
 
             if (updateUser.getEmail() != null) {
@@ -144,8 +142,7 @@ public class UserServicesImpl implements UserServices{
             if (updateUser.getRoles().size() > 0) {
                 currentUser.getRoles().clear();
                 for (UserRoles r : updateUser.getRoles()) {
-                    Role newRole = rolerepository.findById(r.getRole().getRoleid())
-                            .orElseThrow(() -> new ResourceNotFoundException("Role " + r.getRole().getRoleid() + " not found"));
+                    Role newRole = roleServices.findRoleById(r.getRole().getRoleid());
 
                     currentUser.getRoles().add(new UserRoles(currentUser, newRole));
                 }
@@ -168,7 +165,7 @@ public class UserServicesImpl implements UserServices{
             return userrepository.save(currentUser);
         } else
         {
-            throw new ResourceNotFoundException("This use is not authorized to make change");
+            throw new ResourceNotFoundException("This user is not authorized to make change");
         }
     }
 
