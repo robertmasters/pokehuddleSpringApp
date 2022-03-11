@@ -55,41 +55,10 @@ public class OpenController {
                         .buildAndExpand(newuser.getUserid()).toUri();
         responseHeaders.setLocation((newUserURI));
 
-
-        //make it so that user can register and receive access token after registering
-        //rest template allows me to act as a client, which will allow me to make api calls
-        RestTemplate restTemplate = new RestTemplate();
-        //creating the url to call
-        String requestURI = "http://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getLocalPort() + "/login";
-
-        //sending application json
-        List<MediaType> acceptableMediaTypes = new ArrayList<>();
-        acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-
-        //headers and body that goes with request
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.setAccept(acceptableMediaTypes);
-        //authorization part of header
-        headers.setBasicAuth(System.getenv("OAUTHCLIENTID"), System.getenv("OAUTHCLIENTSECRET"));
-
-        //include username and password
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("grant_type", "password");
-        map.add("scope", "read write trust");
-        map.add("username", newminuser.getUsername());
-        map.add("password", newminuser.getPassword());
-
-        //all headers go into a single request
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
-
-        //plain string in json format that has access token
-        String theToken = restTemplate.postForObject(requestURI, request, String.class);
-
-        //return access token in body as well as body and status of created
-        return new ResponseEntity<>(theToken,
+        return new ResponseEntity<>(
                 responseHeaders,
                 HttpStatus.CREATED);
     }
 
 }
+
